@@ -1,4 +1,4 @@
-package ngordnet.test;
+package ngordnet.troy;
 import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
 
