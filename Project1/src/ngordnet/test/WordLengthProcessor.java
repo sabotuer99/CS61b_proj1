@@ -8,7 +8,7 @@ public class WordLengthProcessor {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		
 	}
 
 }
