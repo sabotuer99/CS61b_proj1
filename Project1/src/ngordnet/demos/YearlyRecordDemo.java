@@ -1,7 +1,9 @@
+package ngordnet.demos;
+
 /** Provides examples of using the YearlyRecord class.
  *  @author Josh Hug
  */
-import ngordnet.YearlyRecord;
+import ngordnet.troy.YearlyRecord;
 import java.util.Collection;
 import java.util.HashMap;
 
