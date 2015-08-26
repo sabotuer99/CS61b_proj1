@@ -1,5 +1,9 @@
-import ngordnet.TimeSeries;
+package ngordnet.demos;
+
+
 import java.util.Collection;
+
+import ngordnet.troy.TimeSeries;
 
 /** Class that demonstrates the use of a TimeSeries.
  *  This file is not intended to be compiled or executed.
