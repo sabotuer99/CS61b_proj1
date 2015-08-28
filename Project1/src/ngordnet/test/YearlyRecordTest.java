@@ -12,6 +12,28 @@ import org.junit.Test;
 
 public class YearlyRecordTest {
 	@Test
+	public void ctor_PassInHashMap_CreatesNewHashMap(){
+		//Arrange
+		HashMap<String, Integer> test = new HashMap<String, Integer>();
+		test.put("original",100);
+		test.put("original2",100);
+		YearlyRecord sut = new YearlyRecord(test);
+		
+		//Act
+		sut.put("original", 120);
+		sut.put("test", 12);
+		sut.put("test2", 1212);
+		
+		//Assert
+		assertEquals(2, test.size());
+		assertTrue(test.get("original") == 100);
+		assertTrue(test.get("original2") == 100);
+		assertEquals(4, sut.size());
+		assertTrue(sut.count("original") == 120);
+		assertTrue(sut.count("original2") == 100);
+	}
+	
+	@Test
 	public void putcoutsize_allworkcorrectly(){
 		//Arrange
 		YearlyRecord sut = new YearlyRecord();
@@ -37,6 +59,36 @@ public class YearlyRecordTest {
 		
 		//Assert
 		assertEquals("[test2, test1, test3]", words.toString());	
+	}
+	
+	@Test
+	public void count_WordNotFound_ReturnsZero(){
+		//Arrange
+		YearlyRecord sut = new YearlyRecord();
+		sut.put("test1", 123);
+		sut.put("test2", 12);
+		sut.put("test3", 1234);
+		
+		//Act
+		int count = sut.count("nada");
+		
+		//Assert
+		assertEquals(0, count);		
+	}
+	
+	@Test
+	public void count_WordFound_ReturnsCount(){
+		//Arrange
+		YearlyRecord sut = new YearlyRecord();
+		sut.put("test1", 123);
+		sut.put("test2", 12);
+		sut.put("test3", 1234);
+		
+		//Act
+		int count = sut.count("test3");
+		
+		//Assert
+		assertEquals(1234, count);		
 	}
 	
 	@Test

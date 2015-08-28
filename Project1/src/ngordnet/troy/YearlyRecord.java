@@ -17,14 +17,15 @@ public class YearlyRecord {
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap){
-    	yearlyRecord = otherCountMap;
+    	yearlyRecord = new HashMap<String, Integer>(otherCountMap);
     	yrSorted = new TreeMap<String, Number>(new yrComparator());
     	yrSorted.putAll(yearlyRecord);
     }
 
     /** Returns the number of times WORD appeared in this year. */
     public int count(String word) {
-		return yearlyRecord.get(word);
+    	Integer count = yearlyRecord.get(word);
+		return count == null ? 0 : count;
     }
 
     /** Records that WORD occurred COUNT times in this year. */
