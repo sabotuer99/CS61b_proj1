@@ -1,10 +1,13 @@
+package ngordnet.demos;
+
 /** Provides examples of using the NGramMap class.
  *  @author Josh Hug
  */
-import ngordnet.NGramMap;
-import ngordnet.YearlyRecord;
-import ngordnet.TimeSeries;
 import java.util.ArrayList;
+
+import ngordnet.troy.NGramMap;
+import ngordnet.troy.TimeSeries;
+import ngordnet.troy.YearlyRecord;
 
 public class NGramMapDemo {
     public static void main(String[] args) {

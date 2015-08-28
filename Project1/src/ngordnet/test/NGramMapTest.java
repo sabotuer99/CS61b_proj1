@@ -200,4 +200,36 @@ public class NGramMapTest {
 		assertTrue(((0.0 + 87688.0)/15310495914.0) == record.get(2006));
 		assertTrue(((173294.0 + 171015.0)/19482936409.0) == record.get(2008));
 	}
+	
+	@Test
+	public void demo_AllExpectedValues(){
+		NGramMap ngm = new NGramMap("/ngordnet/data/ngrams/words_that_start_with_q.csv", 
+                "/ngordnet/data/ngrams/total_counts.csv");
+		
+		assertEquals(139, ngm.countInYear("quantity", 1736)); // should print 139
+		YearlyRecord yr = ngm.getRecord(1736);
+		assertEquals(139, yr.count("quantity")); // should print 139
+		
+		TimeSeries<Integer> countHistory = ngm.countHistory("quantity");
+		assertEquals(new Integer(139), countHistory.get(1736)); // should print 139
+		
+		TimeSeries<Long> totalCountHistory = ngm.totalCountHistory();
+		/* In 1736, there were 8049773 recorded words. Note we are not counting
+		* distinct words, but rather the total number of words printed that year. */
+		assertEquals(new Long(8049773), totalCountHistory.get(1736)); // should print 8049773
+		
+		TimeSeries<Double> weightHistory = ngm.weightHistory("quantity");
+		
+		Double weighted = ((double) countHistory.get(1736) 
+		       / (double) totalCountHistory.get(1736)); 
+		
+		assertEquals(weighted, weightHistory.get(1736));  // should print roughly 1.7267E-5
+		
+		ArrayList<String> words = new ArrayList<String>();
+		words.add("quantity");
+		words.add("quality");        
+		
+		TimeSeries<Double> sum = ngm.summedWeightHistory(words);
+		assertEquals(new Double((139.0 + 173.0)/8049773.0), sum.get(1736)); // should print roughly 3.875E-5
+	}
 }
