@@ -182,4 +182,22 @@ public class NGramMapTest {
 		assertTrue(((0.0 + 87688.0)/15310495914.0) == record.get(2006));
 		assertTrue(((173294.0 + 171015.0)/19482936409.0) == record.get(2008));
 	}
+	
+	@Test
+	public void summedWeightHistory_FullHistoryWithUnknownWords_CorrectData(){
+		//Arrange
+		NGramMap sut = new NGramMap("/ngordnet/data/ngrams/very_short.csv", "/ngordnet/data/ngrams/total_counts.csv");
+		Collection<String> words = new ArrayList<String>();
+		words.add("airport");
+		words.add("wandered");
+		words.add("unknown");
+		
+		//Act
+		TimeSeries<Double> record = sut.summedWeightHistory(words);
+		
+		//Assert
+		assertEquals(4, record.size());
+		assertTrue(((0.0 + 87688.0)/15310495914.0) == record.get(2006));
+		assertTrue(((173294.0 + 171015.0)/19482936409.0) == record.get(2008));
+	}
 }
