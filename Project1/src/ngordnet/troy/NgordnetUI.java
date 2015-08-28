@@ -1,5 +1,5 @@
 package ngordnet.troy;
-import edu.princeton.cs.introcs.StdIn;
+//import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
 
 /** Provides a simple user interface for exploring WordNet and NGram data.

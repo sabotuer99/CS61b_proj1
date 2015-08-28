@@ -21,6 +21,7 @@ public class WordNet {
 	private class Synset{
 		public Long id;
 		public List<String> synonyms;
+		@SuppressWarnings("unused")
 		public String definition;
 	}
 	

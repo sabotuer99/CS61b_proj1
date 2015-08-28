@@ -17,6 +17,7 @@ public class WordNetTest {
 		
 		//Act
 		Stopwatch sw = new Stopwatch();
+		@SuppressWarnings("unused")
 		WordNet wn2 = new WordNet("/ngordnet/data/wordnet/synsets.txt", "/ngordnet/data/wordnet/hyponyms.txt");
 		long time = (long)(sw.elapsedTime() * 1000);
 		

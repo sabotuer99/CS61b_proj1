@@ -54,7 +54,8 @@ public class Plotter {
 
     /** Returns the numbers from max to 1, inclusive in decreasing order. 
       * Private, so you don't have to implement if you don't want to. */
-    private static Collection<Number> downRange(int max){
+    @SuppressWarnings("unused")
+	private static Collection<Number> downRange(int max){
 		return null;
     	
     }
