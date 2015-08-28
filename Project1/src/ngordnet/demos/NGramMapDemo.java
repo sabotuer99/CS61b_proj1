@@ -11,8 +11,8 @@ import ngordnet.troy.YearlyRecord;
 
 public class NGramMapDemo {
     public static void main(String[] args) {
-        NGramMap ngm = new NGramMap("./ngrams/words_that_start_with_q.csv", 
-                                    "./ngrams/total_counts.csv");
+		NGramMap ngm = new NGramMap("/ngordnet/data/ngrams/words_that_start_with_q.csv", 
+                "/ngordnet/data/ngrams/total_counts.csv");
 
 
         System.out.println(ngm.countInYear("quantity", 1736)); // should print 139
