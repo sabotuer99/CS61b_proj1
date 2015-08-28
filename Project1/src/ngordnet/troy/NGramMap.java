@@ -1,11 +1,84 @@
 package ngordnet.troy;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 public class NGramMap {
+	private HashMap<Integer, YearlyRecord> wordCounts;
+	private TimeSeries<Long> yearCounts;
+	
     /** Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME. */
     public NGramMap(String wordsFilename, String countsFilename){
-    	
+    	try{
+    		
+	    	String sCurrentLine; 
+	    	wordCounts = new HashMap<Integer, YearlyRecord>();
+	    	yearCounts = new TimeSeries<Long>();
+	    	
+	    	//process wordsFile
+	    	BufferedReader wordsr = getReader(wordsFilename);		
+			while ((sCurrentLine = wordsr.readLine()) != null) {
+				
+				String[] pieces = sCurrentLine.split("\t");
+				String word = pieces[0];
+				Integer year = Integer.decode(pieces[1]);
+				Integer matchCount = Integer.decode(pieces[2]);
+				//per spec we ignore the fourth column
+				//Integer volumeCount = Integer.decode(pieces[3]);
+				
+				//add word and count to appropriate TimeSeries
+				YearlyRecord thisYear = wordCounts.get(year);
+				if(thisYear == null){
+					thisYear = new YearlyRecord();
+					wordCounts.put(year, thisYear);
+				}
+				thisYear.put(word, matchCount);	
+			}
+			wordsr.close();
+			sCurrentLine = "";
+			
+	    	//process countsFile
+	    	BufferedReader cntsr = getReader(countsFilename);		
+			while ((sCurrentLine = cntsr.readLine()) != null) {
+				
+				String[] pieces = sCurrentLine.split(",");
+				Integer year = Integer.decode(pieces[0]);
+				Long wordCount = Long.decode(pieces[1]);
+
+				//per spec we ignore the fourth column
+				//Integer volumeCount = Integer.decode(pieces[3]);
+				
+				//add wordcount to yearCounts
+				yearCounts.put(year, wordCount);	
+			}
+			cntsr.close();
+			sCurrentLine = "";
+
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    //returns an empty (not null) reader if file not found
+    //using the getReader array introduces seam to allow for non filesystem
+    //based handling of WordNet constructor (requires subclassing and overriding)
+    public BufferedReader getReader(String fileName){
+    	try {
+    		File f = new File(getClass().getResource(fileName).getFile());
+			return new BufferedReader(new FileReader(f));
+		} catch (Exception e) {
+			System.out.println("Oops, problem with file!");
+			e.printStackTrace();
+			return new BufferedReader(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
+		}
     }
     
     /** Returns the absolute count of WORD in the given YEAR. If the word
