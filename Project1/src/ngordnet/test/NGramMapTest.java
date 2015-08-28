@@ -7,7 +7,6 @@ import java.util.Collection;
 
 import ngordnet.troy.NGramMap;
 import ngordnet.troy.TimeSeries;
-import ngordnet.troy.WordNet;
 import ngordnet.troy.YearlyRecord;
 
 import org.junit.Ignore;
