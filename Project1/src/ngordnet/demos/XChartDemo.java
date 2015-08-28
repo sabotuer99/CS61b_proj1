@@ -1,3 +1,5 @@
+package ngordnet.demos;
+
 /** Demo of using the XChart class. Will compile 
  *  and run straight out of the box. 
  *  @author Josh Hug
