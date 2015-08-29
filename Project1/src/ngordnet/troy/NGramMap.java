@@ -184,13 +184,15 @@ public class NGramMap {
                                                YearlyRecordProcessor yrp){
     	TimeSeries<Double> pHistory = new TimeSeries<Double>();
     	
+    	for(int i = startYear; i <= endYear; i++){
+    		pHistory.put(i, yrp.process(wordCounts.get(i)));
+    	}
     	
         return pHistory;                                       	
     }
 
     /** Provides processed history of all words ever as processed by YRP. */
     public TimeSeries<Double> processedHistory(YearlyRecordProcessor yrp) {
-		return null;
-    	
+		return processedHistory(wordCounts.firstKey(), wordCounts.lastKey(), yrp);
     }
 }

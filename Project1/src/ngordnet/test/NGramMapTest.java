@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import ngordnet.troy.NGramMap;
 import ngordnet.troy.TimeSeries;
+import ngordnet.troy.WordLengthProcessor;
 import ngordnet.troy.YearlyRecord;
 
 import org.junit.Ignore;
@@ -198,6 +199,43 @@ public class NGramMapTest {
 		assertEquals(4, record.size());
 		assertTrue(((0.0 + 87688.0)/15310495914.0) == record.get(2006));
 		assertTrue(((173294.0 + 171015.0)/19482936409.0) == record.get(2008));
+	}
+	
+	@Test
+	public void processedHistory_CorrectValues(){
+		//Arrange
+		NGramMap sut = new NGramMap("/ngordnet/data/ngrams/very_short.csv", "/ngordnet/data/ngrams/total_counts.csv");
+		WordLengthProcessor wlp = new WordLengthProcessor();
+		Double y2005 = (8.0 * 83769 + 7.0 * 646179) / (83769.0 + 646179.0);
+		Double y2006 = (8.0 * 87688 + 7.0 * 677820) / (87688.0 + 677820.0);
+		Double y2007 = (8.0 * 108634 + 7.0 * (697645 + 175702)) / (108634.0 + 697645.0 + 175702.0);
+		Double y2008 = (8.0 * 171015 + 7.0 * (795265 + 173294)) / (171015.0 + 795265.0 + 173294.0);
+		
+		//Act
+		TimeSeries<Double> result = sut.processedHistory(wlp);
+
+		//Assert
+		assertEquals(y2005, result.get(2005));
+		assertEquals(y2006, result.get(2006));
+		assertEquals(y2007, result.get(2007));
+		assertEquals(y2008, result.get(2008));
+	}
+	
+	@Test
+	public void processedHistory_YearRange_CorrectValues(){
+		//Arrange
+		NGramMap sut = new NGramMap("/ngordnet/data/ngrams/very_short.csv", "/ngordnet/data/ngrams/total_counts.csv");
+		WordLengthProcessor wlp = new WordLengthProcessor();
+		Double y2006 = (8.0 * 87688 + 7.0 * 677820) / (87688.0 + 677820.0);
+		Double y2007 = (8.0 * 108634 + 7.0 * (697645 + 175702)) / (108634.0 + 697645.0 + 175702.0);
+		
+		//Act
+		TimeSeries<Double> result = sut.processedHistory(2006, 2007, wlp);
+
+		//Assert
+		assertEquals(2, result.size());
+		assertEquals(y2006, result.get(2006));
+		assertEquals(y2007, result.get(2007));
 	}
 	
 	@Test
