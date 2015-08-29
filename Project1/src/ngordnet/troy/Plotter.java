@@ -16,7 +16,7 @@ public class Plotter {
 	 * TITLE, XLABEL, YLABEL, and LEGEND.
 	 */
 	public static void plotTS(TimeSeries<? extends Number> ts, String title,
-			String xlabel, String ylabel, String legend) {
+			String ylabel, String xlabel, String legend) {
 //		ArrayList<Number> xValues = new ArrayList<Number>(ts.years());
 //		ArrayList<Number> yValues = new ArrayList<Number>(ts.data());
 //
@@ -30,15 +30,15 @@ public class Plotter {
 //		new SwingWrapper(chart).displayChart();
 		HashMap<String, TimeSeries<? extends Number>> tsa = new HashMap<String, TimeSeries<? extends Number>>();
 		tsa.put(legend, ts);
-		plotTS(tsa, title, xlabel, ylabel);
+		plotTS(tsa, title, ylabel, xlabel);
 	}
 
 	// Private plot method actually does all the work
 	private static void plotTS(HashMap<String, TimeSeries<? extends Number>> ts, String title,
-			String xlabel, String ylabel) {
+			String ylabel, String xlabel) {
 
 		Chart chart = new ChartBuilder().width(800).height(600)
-				.xAxisTitle(ylabel).yAxisTitle(xlabel).build();
+				.xAxisTitle(xlabel).yAxisTitle(ylabel).build();
 		// chart.getStyleManager().setYAxisLogarithmic(true);
 		// chart.getStyleManager().setXAxisLogarithmic(true);
 //		for (int i = 0; i < ts.size(); i++) {
@@ -59,7 +59,7 @@ public class Plotter {
 	public static void plotCountHistory(NGramMap ngm, String word,
 			int startYear, int endYear) {
 		plotTS(ngm.countHistory(word, startYear, endYear),
-				"Plot Count History", "year", "count", "count");
+				"Plot Count History", "count", "year", "count");
 
 	}
 
@@ -70,7 +70,7 @@ public class Plotter {
 	public static void plotWeightHistory(NGramMap ngm, String word,
 			int startYear, int endYear) {
 		plotTS(ngm.weightHistory(word, startYear, endYear),
-				"Plot Weighted History", "year", "count", "count");
+				"Plot Weighted History", "count", "year", word);
 
 	}
 
@@ -81,7 +81,7 @@ public class Plotter {
 	public static void plotProcessedHistory(NGramMap ngm, int startYear,
 			int endYear, YearlyRecordProcessor yrp) {
 		plotTS(ngm.processedHistory(startYear, endYear, yrp),
-				"Processed History", "year", "count", "count");
+				"Processed History", "count", "year", "count");
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Plotter {
 			String categoryLabel, int startYear, int endYear) {
 		TimeSeries<Double> ts = ngm.summedWeightHistory(
 				wn.hyponyms(categoryLabel), startYear, endYear);
-		plotTS(ts, "Category Weights", "weight", "year", "weight");
+		plotTS(ts, "Category Weights", "weight", "year", categoryLabel);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Plotter {
 			tsa.put(word, ngm.countHistory(word, startYear, endYear));
 		}
 
-		plotTS(tsa, "Multi Word Counts", "year", "counts");
+		plotTS(tsa, "Multi Word Counts", "counts", "year");
 	}
 
 	/**
