@@ -49,7 +49,7 @@ public class Plotter {
 		}
 
 		// Show it
-		new SwingWrapper(chart).displayChart();
+		new SwingWrapper(chart).displayChart(title);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Plotter {
 			String categoryLabel, int startYear, int endYear) {
 		TimeSeries<Double> ts = ngm.summedWeightHistory(
 				wn.hyponyms(categoryLabel), startYear, endYear);
-		plotTS(ts, "Category Weights", "year", "count", "count");
+		plotTS(ts, "Category Weights", "weight", "year", "weight");
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class Plotter {
 			tsa.put(categoryLabel, ngm.summedWeightHistory(wn.hyponyms(categoryLabel), startYear, endYear));
 		}
 
-		plotTS(tsa, "Multi Category Weights", "year", "counts");
+		plotTS(tsa, "Multi Category Weights", "weight", "year");
 	}
 
 	/**
@@ -160,6 +160,6 @@ public class Plotter {
 		chart.addSeries("count", xData, yData);
 
 		// Show it
-		new SwingWrapper(chart).displayChart();
+		new SwingWrapper(chart).displayChart("Zipfs Law");
 	}
 }
