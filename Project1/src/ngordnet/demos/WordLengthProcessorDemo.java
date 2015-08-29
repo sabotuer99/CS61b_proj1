@@ -1,5 +1,7 @@
-import ngordnet.WordLengthProcessor;
-import ngordnet.YearlyRecord;
+package ngordnet.demos;
+
+import ngordnet.troy.WordLengthProcessor;
+import ngordnet.troy.YearlyRecord;
 
 public class WordLengthProcessorDemo {
     public static void main(String[] args) {

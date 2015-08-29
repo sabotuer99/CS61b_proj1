@@ -69,7 +69,7 @@ public class NGramMap {
     //returns an empty (not null) reader if file not found
     //using the getReader array introduces seam to allow for non filesystem
     //based handling of WordNet constructor (requires subclassing and overriding)
-    public BufferedReader getReader(String fileName){
+    private BufferedReader getReader(String fileName){
     	try {
     		File f = new File(getClass().getResource(fileName).getFile());
 			return new BufferedReader(new FileReader(f));
