@@ -182,8 +182,10 @@ public class NGramMap {
       * by YRP. */
     public TimeSeries<Double> processedHistory(int startYear, int endYear,
                                                YearlyRecordProcessor yrp){
-												return null;
-                                               	
+    	TimeSeries<Double> pHistory = new TimeSeries<Double>();
+    	
+    	
+        return pHistory;                                       	
     }
 
     /** Provides processed history of all words ever as processed by YRP. */

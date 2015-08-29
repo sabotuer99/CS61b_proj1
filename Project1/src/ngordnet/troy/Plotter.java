@@ -1,6 +1,11 @@
 package ngordnet.troy;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
+import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ChartBuilder;
+import com.xeiam.xchart.SwingWrapper;
 
 /** Utility class for generating plots. */
 public class Plotter {
@@ -8,20 +13,34 @@ public class Plotter {
       * given TITLE, XLABEL, YLABEL, and LEGEND. */
     public static void plotTS(TimeSeries<? extends Number> ts, String title, 
                               String xlabel, String ylabel, String legend){
-    	
+    	ArrayList<Number> xValues = new ArrayList<Number>(ts.years());
+        ArrayList<Number> yValues = new ArrayList<Number>(ts.data());
+
+        Chart chart = new ChartBuilder()
+        	.width(800).height(600)
+        	.xAxisTitle(ylabel).yAxisTitle(xlabel)
+        	.build();
+        //chart.getStyleManager().setYAxisLogarithmic(true);
+        //chart.getStyleManager().setXAxisLogarithmic(true);
+        chart.addSeries(legend, xValues, yValues);
+        
+        // Show it
+        new SwingWrapper(chart).displayChart();       
     }
 
     /** Creates a plot of the absolute word counts for WORD from STARTYEAR
       * to ENDYEAR, using NGM as a data source. */
     public static void plotCountHistory(NGramMap ngm, String word, 
                                       int startYear, int endYear) {
-                                      	
+    	plotTS(ngm.countHistory(word, startYear, endYear),"Plot Count History", "year", "count", "count");
+                              	
     }
 
     /** Creates a plot of the normalized weight counts for WORD from STARTYEAR
       * to ENDYEAR, using NGM as a data source. */
     public static void plotWeightHistory(NGramMap ngm, String word, 
                                        int startYear, int endYear) {
+    	plotTS(ngm.weightHistory(word, startYear, endYear),"Plot Weighted History", "year", "count", "count");
                                        	
     }
 
