@@ -115,18 +115,19 @@ public class WordNet {
     	List<Synset> ssets = words.get(word);
     	
     	//get hyponym synsets
-    	for (Synset synset : ssets) {
-    		hyponyms.addAll(synset.synonyms);
-    		
-			List<Long> hypIds = hypernyms.get(synset.id);
-			if(hypIds != null){
-				for (Long id : hypIds) {
-					Synset hypset = synsets.get(id);
-					hyponyms.addAll(hypset.synonyms);
+    	if(ssets != null){
+	    	for (Synset synset : ssets) {
+	    		hyponyms.addAll(synset.synonyms);
+	    		
+				List<Long> hypIds = hypernyms.get(synset.id);
+				if(hypIds != null){
+					for (Long id : hypIds) {
+						Synset hypset = synsets.get(id);
+						hyponyms.addAll(hypset.synonyms);
+					}
 				}
 			}
-		}
-    	
+    	}
     	return hyponyms;  	
     }
 }

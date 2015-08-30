@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -38,6 +39,18 @@ public class WordNetTest {
         
         //Assert
         assertTrue(result1 && result2 && result3);
+	}
+	
+	@Test
+	public void hyponyms_WordNotInSet_ReturnsEmptySet(){
+		//Arrange
+        WordNet wn = new WordNet("/ngordnet/data/wordnet/synsets11.txt", "/ngordnet/data/wordnet/hyponyms11.txt");
+
+        //Act
+        Set<String> result = wn.hyponyms("asdfasdf");
+        
+        //Assert
+        assertEquals(0, result.size());
 	}
 	
 	@Test

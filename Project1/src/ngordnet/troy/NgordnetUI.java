@@ -2,7 +2,10 @@ package ngordnet.troy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Set;
 
+import ngordnet.test.Stopwatch;
 import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
 
@@ -24,6 +27,8 @@ public class NgordnetUI {
                            + cs.wordFile + "\n" + cs.countFile + "\n" + cs.synsetFile +
                            "\n" + cs.hyponymFile);
         System.out.println("Loading, please wait...\n");
+        
+        Stopwatch sw = new Stopwatch();
         cs.ngm = new NGramMap(cs.wordFile, cs.countFile);
         cs.wn = new WordNet(cs.synsetFile, cs.hyponymFile);
         cs.firstYearInWords = cs.ngm.processedHistory(new DummyProcessor()).firstKey();
@@ -45,7 +50,8 @@ public class NgordnetUI {
         String[] funArray = {"counts", "weights", "wordLength", "categories", "zipf"};
         ArrayList<String> functions = new ArrayList<String>(Arrays.asList(funArray));
        
-        System.out.println("Done!\n");
+        long time = (long)(sw.elapsedTime());
+        System.out.println("Done! Loading took " + time +"s\n");
 
         System.out.println("\nPress \"Enter\" to continue....");
         StdIn.readLine();
@@ -80,6 +86,9 @@ public class NgordnetUI {
                 case "word":
                 	cs.currentWords = tokens;
                 	break;
+                case "hyponyms":
+                	printHyponyms(cs);
+                	break;
                 case "plot":
                 	plot(cs);
                 	break;
@@ -101,6 +110,7 @@ public class NgordnetUI {
     	System.out.println("                                   wordLength, categories, zipf)");
     	System.out.println("word [word1] [word2] ...         - single word or space seperated list");
     	System.out.println("plot                             - plot with current settings");
+    	System.out.println("hyponyms                         - display hyponyms for all current words");
     	System.out.println("clear                            - clean the console display");
     	System.out.println("quit                             - exit program");
     	System.out.println("");
@@ -143,6 +153,31 @@ public class NgordnetUI {
     	default:
     		System.out.println("Hmm... couldn't plot... =(");
     	}
+    }
+    
+    private static void printHyponyms(UiState cs){
+    	for (int i = 0; i < cs.currentWords.length; i++) {
+    		String word = cs.currentWords[i];
+    		String message = "Hyponyms for " + word + ": [" ;
+    		int runningTotal = message.length();
+    		Set<String> hyps = cs.wn.hyponyms(word);
+    		if(hyps.size() > 0){
+    		    for (String hyp : hyps) {
+    				if((runningTotal + hyp.length()) > 71){
+    					message += "\n    ";
+    					runningTotal = 4;
+    				}
+    				message += hyp + ", ";
+    				runningTotal += hyp.length();
+    			}
+    		    message = message.substring(0, message.length() - 2) + "]";
+    			System.out.println(message);
+    		} else {
+    			System.out.println(word + " was not in the dataset! Doh!");
+    		}
+
+		}
+    	System.out.println("");
     }
     
     private class UiState{
